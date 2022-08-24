@@ -1,8 +1,9 @@
 <?php
 return [
     "KATEGORI"=>[
-        "HISTORI_INVENTORIS"=>[
-            "TIPE"=>1
+        "SURAT"=>[
+            "MASUK"=>1,
+            "KELUAR"=>2,
         ]
     ],
 

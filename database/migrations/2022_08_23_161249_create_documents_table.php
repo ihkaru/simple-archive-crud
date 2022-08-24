@@ -17,6 +17,8 @@ return new class extends Migration
             $table->id();
             $table->string("document")->unique();
             $table->text("description");
+            $table->string("to");
+            $table->unsignedSmallInteger("type");
             $table->timestamps();
         });
     }

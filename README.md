@@ -18,8 +18,8 @@
 - Jalankan `npx @preset/cli apply laravel:vite` pada terminal
 - Jalankan `npm run dev` untuk menyalakan server
 - Jalankan `php artisan serve` untuk menyalakan server
-- Buka url `http://localhost:8000/admin/login`
-- Login dengan `admin@example.com` dan password `password123`
+- Buka url `http://127.0.0.1:8000/admin/login`
+- Login dengan `admin@gmail.com` dan password `password123`
 
 ## Setiap Ada Commit Migration/Seeder/Dependency Baru
 - Jalankan `composer install` pada terminal 

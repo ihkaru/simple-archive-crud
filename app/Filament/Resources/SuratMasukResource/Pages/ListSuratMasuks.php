@@ -16,4 +16,8 @@ class ListSuratMasuks extends ListRecords
             Actions\CreateAction::make(),
         ];
     }
+    protected function getTitle(): string
+    {
+        return "Surat Masuk";
+    }
 }

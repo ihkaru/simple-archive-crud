@@ -26,6 +26,8 @@ class SuratMasukResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-inbox-in';
     protected static ?string $navigationGroup = 'Manajemen Surat';
     protected static ?string $recordTitleAttribute = 'document';
+    protected static ?string $navigationLabel = 'Surat Masuk';
+
 
 
 

@@ -26,6 +26,7 @@ class SuratKeluarResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-s-arrow-up';
     protected static ?string $navigationGroup = 'Manajemen Surat';
     protected static ?string $recordTitleAttribute = 'document';
+    protected static ?string $navigationLabel = 'Surat Keluar';
 
 
 

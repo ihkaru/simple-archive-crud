@@ -16,4 +16,9 @@ class ListSuratKeluars extends ListRecords
             Actions\CreateAction::make(),
         ];
     }
+
+    protected function getTitle(): string
+    {
+        return "Surat Keluar";
+    }
 }

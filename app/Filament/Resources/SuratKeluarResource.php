@@ -6,6 +6,7 @@ use App\Filament\Resources\SuratKeluarResource\Pages;
 use App\Filament\Resources\SuratKeluarResource\RelationManagers;
 use App\Models\SuratKeluar;
 use Filament\Forms;
+use Filament\Forms\Components\Card;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
@@ -18,6 +19,7 @@ use Filament\Tables\Filters\MultiSelectFilter;
 use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Collection;
 
 class SuratKeluarResource extends Resource
 {
@@ -27,6 +29,7 @@ class SuratKeluarResource extends Resource
     protected static ?string $navigationGroup = 'Manajemen Surat';
     protected static ?string $recordTitleAttribute = 'document';
     protected static ?string $navigationLabel = 'Surat Keluar';
+    protected static ?int $navigationSort = 2;
 
 
 
@@ -34,24 +37,41 @@ class SuratKeluarResource extends Resource
     {
         return $form
             ->schema([
-                Textarea::make("description")->label("Deskripsi"),
-                TextInput::make('to')->label("Ditujukan ke"),
-                FileUpload::make('document')
-                    ->enableDownload()
-                    ->required()
-                    ->preserveFilenames()
-                    ->unique()
+                Card::make()
+                    ->schema([
+                        FileUpload::make('document')
+                            ->label("Surat")
+                            // ->enableDownload()
+                            ->required()
+                            ->preserveFilenames()
+                            ->unique(),
+                        TextInput::make('to')->label("Ditujukan ke")->required(),
+                        TextInput::make('from')->label("Dari")->required(),
+                    ]),
+                Card::make()
+                    ->schema([
+                        Textarea::make("description")->label("Deskripsi"),
+                    ])
+
             ]);
     }
 
-
+    public static function restructure(array|Collection $items){
+        $res = [];
+        foreach($items as $t){
+            $res[$t] = $t;
+        }
+        return $res;
+    }
     public static function table(Table $table): Table
     {
-        $tertuju = static::$model::select('to')->distinct()->get()->pluck('to');
+        $tertuju = static::restructure(static::$model::select('to')->distinct()->get()->pluck('to'));
+        $dari = static::restructure(static::$model::select('from')->distinct()->get()->pluck('from'));
         return $table
             ->columns([
                 TextColumn::make('document')->sortable()->searchable(),
                 TextColumn::make('description')->sortable()->searchable(),
+                TextColumn::make('from')->label("Dari")->sortable()->searchable(),
                 TextColumn::make('to')->label("Ditujukan ke")->sortable()->searchable(),
                 TextColumn::make('created_at')
                     ->label("Dibuat pada")
@@ -60,7 +80,8 @@ class SuratKeluarResource extends Resource
 
             ])
             ->filters([
-                SelectFilter::make("to")->label("Ditujukan ke")->options($tertuju)
+                SelectFilter::make("to")->label("Ditujukan ke")->options($tertuju),
+                SelectFilter::make("from")->label("Dari")->options($dari)
 
             ])
             ->actions([

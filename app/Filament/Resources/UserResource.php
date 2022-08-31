@@ -23,6 +23,7 @@ class UserResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-user';
     protected static ?string $navigationGroup = 'Manajemen Pengguna';
     protected static ?string $navigationLabel = 'Pengguna';
+    protected static ?int $navigationSort = 4;
 
 
     public static function form(Form $form): Form
@@ -53,14 +54,6 @@ class UserResource extends Resource
                     ->minLength(8)
                     ->maxLength(255)
                 ,
-                Select::make('orang_id')
-                    ->label("Untuk Orang")
-                    ->relationship('orang','nama')
-                    ->searchable()
-                    // ->getSearchResultsUsing(fn(string $search) => Orang::where('nama','like',"%{$search}%")->limit(50)->pluck('nama','id'))
-                    // ->getOptionLabelUsing(fn($value): ?string => Orang::find($value)?->name)
-                    // ->dehydrateStateUsing(fn($state)=>$state->id)
-                    ,
 
             ]);
     }

@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Option;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -21,7 +22,8 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
         $this->call([
-            AdminSeeder::class
+            OptionSeeder::class,
+            AdminSeeder::class,
         ]);
     }
 }

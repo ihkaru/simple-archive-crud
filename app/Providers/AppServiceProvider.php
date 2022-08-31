@@ -2,8 +2,10 @@
 
 namespace App\Providers;
 
+use App\Models\Option;
 use Carbon\Carbon;
 use Filament\Facades\Filament;
+use Filament\Navigation\NavigationItem;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 
@@ -40,5 +42,16 @@ class AppServiceProvider extends ServiceProvider
         if (isset($_SERVER['HTTPS']) && ($_SERVER['HTTPS'] == 'on' || $_SERVER['HTTPS'] == 1) || isset($_SERVER['HTTP_X_FORWARDED_PROTO']) &&  $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https') {
             $this->app['request']->server->set('HTTPS', true);
         }
+
+        Filament::serving(function () {
+            $agendaOpt = Option::where("key","URL_AGENDA")->firstOrFail();
+            Filament::registerNavigationItems([
+                NavigationItem::make('Agenda')
+                    ->url($agendaOpt->value, shouldOpenInNewTab: true)
+                    ->icon('sui-calendar-date')
+                    ->label("Agenda")
+                    ->sort(1)
+            ]);
+        });
     }
 }
